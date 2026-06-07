@@ -32,6 +32,7 @@ Wave evidence belongs in `.omo/evidence/openai-docs-wave-{N}.md`.
 
 ## Architecture
 - `.codex-plugin/plugin.json`: Codex plugin manifest named `thon-judge`.
+- `.agents/plugins/marketplace.json`: repo-local marketplace entry for Codex CLI plugin discovery.
 - `skills/thon-judge/SKILL.md`: operator workflow and exact shell command.
 - `scripts/thon-judge.cmd`: Windows wrapper that prefers `pwsh` and falls back to Windows PowerShell.
 - `scripts/thon-judge.ps1`: deterministic CLI with `parse`, `criteria`, `judge`, `fixtures`, and `doctor` commands.
@@ -45,6 +46,7 @@ Wave evidence belongs in `.omo/evidence/openai-docs-wave-{N}.md`.
 - Batch input support for `.json`, `.md`, and `.txt`.
 - Normalized participant/team name, repo URL, screenshot paths, lobster usage, and evidence warnings.
 - Offline GitHub fixtures for tests, with warning mode for missing live evidence.
+- Live public GitHub README and recent commit evidence collection without a Python runtime.
 - Deterministic scoring that never exceeds 100 or drops below 0.
 - Harness signal catalog derived from the case studies.
 - HTML output that escapes untrusted text and is readable as a standalone one-pager.
@@ -63,6 +65,7 @@ Wave evidence belongs in `.omo/evidence/openai-docs-wave-{N}.md`.
 pwsh -NoProfile -ExecutionPolicy Bypass -File tests/run-tests.ps1
 scripts/thon-judge.cmd doctor --plugin-root . --strict --pretty
 scripts/thon-judge.cmd judge --input examples/submissions.json --criteria JUDJE.md --cases cases --github-fixtures examples/github --output reports/example.html --evidence .omo/evidence/final-judge.json
+scripts/thon-judge.cmd judge --input .omo/evidence/live-submissions.json --criteria JUDJE.md --cases cases --output reports/live.html --evidence .omo/evidence/live-judge.json
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/thon-judge.ps1 parse --input examples/submissions.json
 ```
 
@@ -92,6 +95,11 @@ For report QA, serve `reports/example.html` with a short PowerShell `HttpListene
 6. Wire Codex skill and release checks.
    - Acceptance: skill references the exact `.cmd` command, `doctor` passes, README quickstart works, and CI runs the PowerShell test harness.
    - Commit: `docs(plugin): document shell-native judge workflow`.
+
+## Completion Status
+- Done: repository scaffold, plugin manifest, repo marketplace, skill workflow, Windows `.cmd` wrapper, PowerShell CLI, rubric, case-study harness signals, fixtures, shell tests, HTML report, CI, live GitHub evidence, local commit, GitHub repo creation, and push.
+- Done: official Codex manual was refreshed and used for skill, plugin, marketplace, MCP, and slash-command decisions.
+- Not included by design: screenshot visual scoring, private repository access, participant repository mutation, bundled MCP server, and Python runtime dependencies.
 
 ## Final Verification
 - `pwsh -NoProfile -ExecutionPolicy Bypass -File tests/run-tests.ps1` exits 0.

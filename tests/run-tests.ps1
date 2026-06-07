@@ -16,7 +16,13 @@ function Assert-True {
 
 function Invoke-Judge {
   param([string[]]$CommandArgs)
-  $output = & pwsh -NoProfile -ExecutionPolicy Bypass -File $Script @CommandArgs 2>&1
+  $previousErrorActionPreference = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
+  try {
+    $output = & pwsh -NoProfile -ExecutionPolicy Bypass -File $Script @CommandArgs 2>&1
+  } finally {
+    $ErrorActionPreference = $previousErrorActionPreference
+  }
   [pscustomobject]@{ Code = $LASTEXITCODE; Output = ($output -join "`n") }
 }
 
@@ -28,6 +34,9 @@ function Test-Scaffold {
   Assert-True ($manifest.scripts -eq "./scripts/") "manifest scripts path mismatch"
   Assert-True (Test-Path $Cmd) "cmd wrapper missing"
   Assert-True (Test-Path $Script) "PowerShell script missing"
+  Assert-True (Test-Path (Join-Path $Root ".agents/plugins/marketplace.json")) "repo marketplace missing"
+  $marketplace = Get-Content (Join-Path $Root ".agents/plugins/marketplace.json") -Raw | ConvertFrom-Json
+  Assert-True ($marketplace.plugins[0].name -eq "thon-judge") "marketplace plugin name mismatch"
 }
 
 function Test-Criteria {
@@ -79,6 +88,12 @@ function Test-Malformed {
   Assert-True ($result.Output.Contains("validation error")) "malformed failure missing validation error"
 }
 
+function Test-Doctor {
+  $result = Invoke-Judge @("doctor", "--plugin-root", $Root, "--strict", "--pretty")
+  Assert-True ($result.Code -eq 0) "doctor failed: $($result.Output)"
+  Assert-True ($result.Output.Contains("thon-judge plugin OK")) "doctor output mismatch"
+}
+
 $tests = [ordered]@{
   scaffold = ${function:Test-Scaffold}
   criteria = ${function:Test-Criteria}
@@ -86,6 +101,7 @@ $tests = [ordered]@{
   lobster = ${function:Test-Lobster}
   report = ${function:Test-Report}
   malformed = ${function:Test-Malformed}
+  doctor = ${function:Test-Doctor}
 }
 
 if ($TestName -eq "all") {

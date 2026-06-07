@@ -223,7 +223,35 @@ function Get-GithubEvidence {
     }
     return Get-Content $fixture -Raw | ConvertFrom-Json
   }
-  return [pscustomobject]@{ readme_text = ""; commits = @(); warnings = @("live GitHub collection not configured in this run") }
+  $warnings = @()
+  $headers = @{ "User-Agent" = "thon-judge" }
+  $readmeText = ""
+  $commits = @()
+  try {
+    $readme = Invoke-RestMethod -Uri "https://api.github.com/repos/$ownerRepo/readme" -Headers $headers
+    $bytes = [Convert]::FromBase64String(($readme.content -replace "\s", ""))
+    $readmeText = [System.Text.Encoding]::UTF8.GetString($bytes)
+  } catch {
+    $warnings += "README fetch failed for ${ownerRepo}: $($_.Exception.Message)"
+  }
+  try {
+    $commitRows = @(Invoke-RestMethod -Uri "https://api.github.com/repos/$ownerRepo/commits?per_page=30" -Headers $headers)
+    $commits = @($commitRows | ForEach-Object {
+      $author = [string]$_.commit.author.name
+      if ($_.author -and $_.author.login) {
+        $author = [string]$_.author.login
+      }
+      [pscustomobject]@{
+        sha = [string]$_.sha
+        message = [string]$_.commit.message
+        date = [string]$_.commit.author.date
+        author = $author
+      }
+    })
+  } catch {
+    $warnings += "commit fetch failed for ${ownerRepo}: $($_.Exception.Message)"
+  }
+  return [pscustomobject]@{ readme_text = $readmeText; commits = $commits; warnings = $warnings }
 }
 
 function Get-Score {

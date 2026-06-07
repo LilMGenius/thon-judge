@@ -1,0 +1,21 @@
+{
+  "name": "thon-judge-local",
+  "plugins": [
+    {
+      "name": "thon-judge",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding",
+      "interface": {
+        "displayName": "thon-judge agent",
+        "shortDescription": "Score hackathon submissions from repo evidence"
+      }
+    }
+  ]
+}

@@ -7,6 +7,8 @@ description: "Score hackathon submissions with the thon-judge CLI when the user 
 
 Use this skill to judge hackathon preliminary submissions from a batch file.
 
+Invoke it explicitly as `$thon-judge:thon-judge` when Codex shows plugin-qualified skill names, or pick `thon-judge` from `/skills`.
+
 ## Inputs
 - Batch input: JSON, Markdown, or TXT.
 - Criteria: `JUDJE.md`.

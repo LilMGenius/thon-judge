@@ -22,6 +22,12 @@ scripts/thon-judge.cmd judge --input examples/submissions.md --criteria JUDJE.md
 scripts/thon-judge.cmd judge --input examples/submissions.txt --criteria JUDJE.md --cases cases --github-fixtures examples/github --output reports/readme-txt.html
 ```
 
+For live public GitHub evidence, omit `--github-fixtures`. The CLI fetches README and recent commit metadata with PowerShell's built-in web APIs:
+
+```bash
+scripts/thon-judge.cmd judge --input examples/submissions.json --criteria JUDJE.md --cases cases --output reports/live.html --evidence .omo/evidence/live-judge.json
+```
+
 ## OpenAI/Codex Docs Grounding
 
 Before implementation waves, refresh the Codex manual:
@@ -44,6 +50,19 @@ Screenshots are validated/listed and linked in the HTML report. They are not vis
 ## Plugin
 
 The plugin id is `thon-judge`; the display name is `thon-judge agent`. The reusable workflow lives in `skills/thon-judge/SKILL.md`, while deterministic behavior lives in `scripts/thon-judge.ps1` and the Windows wrapper `scripts/thon-judge.cmd`.
+
+## Codex CLI Use
+
+The repo includes `.agents/plugins/marketplace.json` so Codex CLI can discover this plugin from a local marketplace. Add or inspect the marketplace with:
+
+```bash
+codex plugin marketplace add .
+codex
+/plugins
+/skills
+```
+
+After installing/enabling the plugin, invoke the bundled skill explicitly from the composer with `$thon-judge:thon-judge` when plugin-qualified skill names are shown, or choose `thon-judge` from `/skills`. Some Codex plugin surfaces also expose explicit plugin selection with `@thon-judge`; the underlying reusable workflow is still the `thon-judge` skill.
 
 ## Runtime
 
