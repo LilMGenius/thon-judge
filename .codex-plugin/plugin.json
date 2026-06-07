@@ -1,0 +1,27 @@
+{
+  "name": "thon-judge",
+  "version": "0.1.0",
+  "description": "Shell-native Codex plugin for evidence-backed hackathon preliminary judging.",
+  "author": {
+    "name": "LilMGenius",
+    "url": "https://github.com/LilMGenius"
+  },
+  "homepage": "https://github.com/LilMGenius/thon-judge",
+  "repository": "https://github.com/LilMGenius/thon-judge",
+  "license": "MIT",
+  "keywords": ["codex", "hackathon", "judging", "rubric", "html-report"],
+  "skills": "./skills/",
+  "scripts": "./scripts/",
+  "interface": {
+    "displayName": "thon-judge agent",
+    "shortDescription": "Score hackathon submissions from repo evidence",
+    "longDescription": "Batch-judge hackathon submissions using JUDJE.md, harness case-study signals, public GitHub evidence, screenshot paths, and lobster-count penalties through Windows-compatible shell scripts.",
+    "developerName": "LilMGenius",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Write"],
+    "defaultPrompt": [
+      "Use $thon-judge:thon-judge to score a hackathon submissions batch and write an HTML one-pager"
+    ],
+    "brandColor": "#0F766E"
+  }
+}

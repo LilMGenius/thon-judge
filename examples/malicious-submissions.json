@@ -1,0 +1,11 @@
+{
+  "submissions": [
+    {
+      "name": "<script>alert(1)</script>",
+      "repo_url": "https://github.com/example/malicious",
+      "screenshots": [],
+      "lobster_count": 0
+    }
+  ]
+}
+

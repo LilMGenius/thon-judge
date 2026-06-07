@@ -1,0 +1,9 @@
+{
+  "readme_text": "Niche creative product with harness evidence, deterministic checks, and cost-aware QA.",
+  "commits": [
+    {"message": "feat: initial build", "date": "2026-01-01", "author": "B"},
+    {"message": "test: add qa", "date": "2026-01-02", "author": "B"},
+    {"message": "docs: add readme", "date": "2026-01-03", "author": "B"}
+  ]
+}
+

@@ -1,0 +1,10 @@
+{
+  "readme_text": "Harness-driven product with reproducible evidence, deterministic verification, original niche workflow, and polished product value.",
+  "commits": [
+    {"message": "feat: add product flow", "date": "2026-01-01", "author": "A"},
+    {"message": "test: add harness checks", "date": "2026-01-02", "author": "A"},
+    {"message": "fix: improve report", "date": "2026-01-03", "author": "A"},
+    {"message": "docs: explain workflow", "date": "2026-01-04", "author": "A"}
+  ]
+}
+

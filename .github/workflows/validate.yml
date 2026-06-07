@@ -1,0 +1,20 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  shell-native:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run PowerShell tests
+        shell: pwsh
+        run: pwsh -NoProfile -ExecutionPolicy Bypass -File tests/run-tests.ps1
+      - name: Validate plugin manifest
+        shell: pwsh
+        run: Get-Content .codex-plugin/plugin.json -Raw | ConvertFrom-Json | Out-Null
+      - name: Run doctor
+        shell: pwsh
+        run: scripts/thon-judge.cmd doctor --plugin-root . --strict --pretty

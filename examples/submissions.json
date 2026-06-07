@@ -1,0 +1,21 @@
+{
+  "submissions": [
+    {
+      "name": "Alpha",
+      "repo_url": "https://github.com/example/alpha",
+      "screenshots": ["examples/screenshots/alpha.png"],
+      "lobster_count": 1
+    },
+    {
+      "name": "Beta",
+      "repo_url": "https://github.com/example/beta",
+      "screenshots": ["examples/screenshots/beta.png"],
+      "lobsters": [
+        {"marker": "(lobster)", "index": 1},
+        {"marker": "(lobster)", "index": 2},
+        {"marker": "(lobster)", "index": 3}
+      ]
+    }
+  ]
+}
+

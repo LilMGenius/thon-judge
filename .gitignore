@@ -1,0 +1,5 @@
+reports/*.html
+reports/*.json
+!reports/.gitignore
+.omo/evidence/
+.omo/ulw-loop/
